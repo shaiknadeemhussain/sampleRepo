@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.RunaRace"
+    namespace = "com.example.zhifu"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.RunaRace"
+        applicationId = "com.example.zhifu"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -51,9 +51,6 @@ android {
 
 dependencies {
 
-    implementation ("com.google.android.material:material:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.core:core-ktx:1.10.1")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
