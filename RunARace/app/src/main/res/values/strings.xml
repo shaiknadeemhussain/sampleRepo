@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Run A Race</string>
+    <string name="Nadeem1">Nadeem 1</string>
+    <string name="Nadeem2">Nadeem 2</string>
+    <string name="reset">Reset</string>
+    <string name="start">Start</string>
+    <string name="_0">0%</string>
+    <string name="_100">100%</string>
+    <string name="winner">Winner: %1$s</string>
+</resources>
