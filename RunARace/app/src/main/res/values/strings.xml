@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Run A Race</string>
+    <string name="zhifu_1">Zhifu 1</string>
+    <string name="zhifu_2">Zhifu 2</string>
+    <string name="reset">Reset</string>
+    <string name="start">Start</string>
+    <string name="_0">0%</string>
+    <string name="_100">100%</string>
+    <string name="winner">Winner: %1$s</string>
+</resources>
