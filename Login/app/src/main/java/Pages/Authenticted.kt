@@ -1,0 +1,5 @@
+package Pages
+
+class Authenticted {
+
+}
