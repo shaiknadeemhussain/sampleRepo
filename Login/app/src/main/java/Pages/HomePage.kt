@@ -1,10 +1,7 @@
 package Pages
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
@@ -17,16 +14,18 @@ import com.example.login.ui.theme.AuthViewModel
 
 @Composable
 fun HomePage(modifier: Modifier = Modifier, navController: NavHostController, authViewModel: AuthViewModel) {
-
     val authState = authViewModel.authState.observeAsState()
 
+    // After login, navigate directly to break schedule
     LaunchedEffect(authState.value) {
-        when(authState.value){
+        when (authState.value) {
+            is AuthState.Authenticated -> navController.navigate("break_schedule") // Direct navigation to BreakSchedulePage
             is AuthState.Unauthenticated -> navController.navigate("login")
             else -> Unit
         }
     }
 
+    // Display home page UI until authState is processed
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -40,5 +39,4 @@ fun HomePage(modifier: Modifier = Modifier, navController: NavHostController, au
             Text(text = "Sign out")
         }
     }
-
 }

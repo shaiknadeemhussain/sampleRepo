@@ -1,4 +1,4 @@
-package com.example.login.ui.theme
+package com.example.login
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,23 +8,23 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.login.MyAppNavigation
 import com.example.login.ui.theme.LoginTheme
+import com.example.login.ui.theme.AuthViewModel
+import com.example.login.MyAppNavigation
 
 class MainActivity : ComponentActivity() {
+    private val authViewModel: AuthViewModel by viewModels() // ViewModel initialized here
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        val authViewModel : AuthViewModel by viewModels()
+        enableEdgeToEdge()  // To make the app go edge-to-edge
+
         setContent {
             LoginTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                   MyAppNavigation(modifier = Modifier.padding(innerPadding), authViewModel = authViewModel)
+                    // Pass authViewModel to the navigation function
+                    MyAppNavigation(modifier = Modifier.padding(innerPadding), authViewModel = authViewModel)
                 }
             }
         }
