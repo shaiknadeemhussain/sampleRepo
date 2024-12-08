@@ -1,8 +1,9 @@
 package Pages
 
+import android.os.CountDownTimer
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.text.TextStyle
@@ -12,34 +13,77 @@ import androidx.navigation.NavController
 
 @Composable
 fun MindfulnessActivityPage(modifier: Modifier = Modifier, navController: NavController) {
+    // State to control the timer and its UI
+    var isTimerRunning by remember { mutableStateOf(false) }
+    var timeLeft by remember { mutableStateOf(300000L) } // 5 minutes in milliseconds
+    var countDownTimer: CountDownTimer? = remember { null }
+
+    // Timer functionality
+    val startTimer: () -> Unit = {
+        if (!isTimerRunning) {
+            isTimerRunning = true
+            countDownTimer = object : CountDownTimer(timeLeft, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    timeLeft = millisUntilFinished
+                }
+
+                override fun onFinish() {
+                    isTimerRunning = false
+                }
+            }.start()
+        }
+    }
+
+    val stopTimer: () -> Unit = {
+        countDownTimer?.cancel()
+        isTimerRunning = false
+    }
+
     Column(modifier = modifier.fillMaxSize().padding(16.dp)) {
         Text("Mindfulness Activity", style = MaterialTheme.typography.headlineMedium)
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // A simple timer or meditation guide (this could be dynamic in a real app)
-        Text(
-            text = "Take a moment to relax and focus on your breath.",
-            style = TextStyle(fontSize = 18.sp)
-        )
+        // Display the timer or message based on the state
+        if (isTimerRunning) {
+            val minutes = (timeLeft / 1000) / 60
+            val seconds = (timeLeft / 1000) % 60
+            Text(
+                text = String.format("%02d:%02d", minutes, seconds),
+                style = TextStyle(fontSize = 36.sp)
+            )
+        } else {
+            Text(
+                text = "Take a moment to relax and focus on your breath.",
+                style = TextStyle(fontSize = 18.sp)
+            )
+        }
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        Button(
-            onClick = {
-                // Action for starting or continuing the mindfulness session
-                // e.g., navigate to a timer page or start a meditation guide
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Start Meditation")
+        // Display button to start or stop the meditation
+        if (!isTimerRunning) {
+            Button(
+                onClick = { startTimer() },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Start Meditation")
+            }
+        } else {
+            // Display the stop button when the timer is running
+            Button(
+                onClick = { stopTimer() },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Stop Meditation")
+            }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Button to navigate back
         Button(
             onClick = {
-                // Navigate back to the BreakSchedulePage or HomePage
                 navController.popBackStack()
             },
             modifier = Modifier.fillMaxWidth()

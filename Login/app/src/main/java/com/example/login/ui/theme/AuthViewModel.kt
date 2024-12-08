@@ -17,6 +17,7 @@ class AuthViewModel : ViewModel() {
     }
 
     fun checkAuthStatus() {
+        // Check if user is authenticated when app starts
         if (auth.currentUser == null) {
             _authState.value = AuthState.Unauthenticated
         } else {
