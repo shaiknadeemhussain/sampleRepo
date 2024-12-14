@@ -16,8 +16,8 @@ class AuthViewModel : ViewModel() {
         checkAuthStatus()
     }
 
+    // This method checks the user's authentication status when the app is initialized
     fun checkAuthStatus() {
-        // Check if user is authenticated when app starts
         if (auth.currentUser == null) {
             _authState.value = AuthState.Unauthenticated
         } else {
@@ -25,11 +25,13 @@ class AuthViewModel : ViewModel() {
         }
     }
 
+    // Login method
     fun login(email: String, password: String) {
         if (email.isEmpty() || password.isEmpty()) {
             _authState.value = AuthState.Error("Email or password can't be empty")
             return
         }
+
         _authState.value = AuthState.Loading
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
@@ -42,11 +44,13 @@ class AuthViewModel : ViewModel() {
             }
     }
 
+    // Sign-up method
     fun signup(email: String, password: String) {
         if (email.isEmpty() || password.isEmpty()) {
             _authState.value = AuthState.Error("Email or password can't be empty")
             return
         }
+
         _authState.value = AuthState.Loading
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
@@ -59,12 +63,14 @@ class AuthViewModel : ViewModel() {
             }
     }
 
+    // Sign-out method
     fun signout() {
         auth.signOut()
         _authState.value = AuthState.Unauthenticated
     }
 }
 
+// Sealed class to represent various authentication states
 sealed class AuthState {
     object Authenticated : AuthState()
     object Unauthenticated : AuthState()
